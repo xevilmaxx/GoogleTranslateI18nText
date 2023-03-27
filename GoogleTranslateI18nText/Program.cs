@@ -23,13 +23,25 @@ namespace GoogleTranslateI18nText
             //string[] files = Directory.GetFiles("./../../../i18ntext/", "*.json", SearchOption.AllDirectories);
             var files = new I18ntextReader().GetMatchingFiles(i18nTextFilesDir, srcLang);
 
-            foreach(var file in files)
+            foreach (var file in files)
             {
 
                 var keyValues = new I18ntextReader().ReadFile(file);
+                var existentKeyValues = new I18ntextReader().ReadTranslatedFile(file, srcLang, dstLang);
 
                 foreach (var keyValue in keyValues)
                 {
+
+                    if (existentKeyValues != null && existentKeyValues.ContainsKey(keyValue.Key))
+                    {
+                        log.Debug("Will use existent translation");
+                        log.Debug($"[{keyValue.Key}] -> {existentKeyValues[keyValue.Key]}");
+
+                        //avoid translating manually edited records
+                        keyValues[keyValue.Key] = existentKeyValues[keyValue.Key];
+
+                        continue;
+                    }
 
                     var translated = translator.Translate(keyValue.Value, srcLang, dstLang);
 

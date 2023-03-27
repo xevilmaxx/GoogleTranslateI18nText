@@ -56,6 +56,32 @@ namespace GoogleTranslateI18nText
             }
         }
 
+        public Dictionary<string, string> ReadTranslatedFile(string FilePath, string SrcLang, string DstLang)
+        {
+            try
+            {
+
+                var newFilePath = FilePath.Replace($"{SrcLang}.json", $"{DstLang}.json");
+
+                var fileContent = File.ReadAllText(newFilePath);
+
+                var result = JsonConvert.DeserializeObject<Dictionary<string, string>>(fileContent);
+
+                return result;
+
+            }
+            catch (FileNotFoundException ex)
+            {
+                log.Trace("Simply not found file, its not world ending");
+                return null;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                return null;
+            }
+        }
+
         public bool GenerateTranslatedFile(string FilePath, string SrcLang, string DstLang, Dictionary<string, string> TranslatedData)
         {
             try
