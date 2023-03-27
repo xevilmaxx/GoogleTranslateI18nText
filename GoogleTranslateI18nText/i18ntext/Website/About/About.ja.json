@@ -1,0 +1,13 @@
+{
+  "Metadata": "メタデータ",
+  "Value": "価値",
+  "Version": "バージョン",
+  "PhysicalPath": "物理パス",
+  "CreationTime": "作成時間",
+  "ChangeTime": "時間変更",
+  "Publisher": "出版社",
+  "MainDeveloper": "主な開発者",
+  "Contacts": "連絡先",
+  "Email": "Eメール",
+  "Telephone": "電話"
+}
